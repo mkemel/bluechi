@@ -265,7 +265,7 @@ static int get_status_unit_on(Client *client, char *node_name, char *unit_name, 
         return 0;
 }
 
-static int method_status_unit_on(Client *client, char *node_name, char **units, size_t units_count) {
+static int method_status_unit_on(Client *client, char *node_name, char **units, size_t units_count, bool do_watch) {
         unsigned i = 0;
 
         size_t max_name_len = get_max_name_len(units, units_count);
@@ -633,15 +633,16 @@ static int method_print_node_status(Client *client, char *node_name, bool do_wat
 }
 
 int method_status(Command *command, void *userdata) {
+        bool do_watch = command_flag_exists(command, ARG_WATCH_SHORT);
         switch (command->opargc) {
         case 0:
-                return method_print_node_status(userdata, NULL, command_flag_exists(command, ARG_WATCH_SHORT));
+                return method_print_node_status(userdata, NULL, do_watch);
         case 1:
                 return method_print_node_status(
-                                userdata, command->opargv[0], command_flag_exists(command, ARG_WATCH_SHORT));
+                                userdata, command->opargv[0], do_watch);
         case 2:
                 return method_status_unit_on(
-                                userdata, command->opargv[0], &command->opargv[1], command->opargc - 1);
+                                userdata, command->opargv[0], &command->opargv[1], command->opargc - 1, do_watch);
         default:
                 return -EINVAL;
         }
