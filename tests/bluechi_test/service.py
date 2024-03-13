@@ -39,6 +39,7 @@ class Option(enum.Enum):
 
 class Service():
     """An empty service, which only contains predefined sections"""
+
     def __init__(self, name: str = None) -> None:
         self.cp = configparser.ConfigParser()
         # Enable case sensitivity
@@ -68,6 +69,7 @@ class Service():
 
 class SimpleService(Service):
     """A simple service, which is using /bin/true command"""
+
     def __init__(self, name: str = "simple.service") -> None:
         super(SimpleService, self).__init__(name)
 
@@ -81,6 +83,7 @@ class SimpleService(Service):
 
 class SimpleRemainingService(SimpleService):
     """A simple service, which adds RemainAfterExit enabled to SimpleService"""
+
     def __init__(self, name: str = "simple.service") -> None:
         super(SimpleRemainingService, self).__init__(name)
 
@@ -89,6 +92,7 @@ class SimpleRemainingService(SimpleService):
 
 class SleepingService(Service):
     """A simple service, which is using /bin/sleep command"""
+
     def __init__(self, name: str = "sleeping.service") -> None:
         super(SleepingService, self).__init__(name)
 

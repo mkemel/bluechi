@@ -12,6 +12,7 @@ class ExecutionError(Exception):
     """ Raised when executed command has non-zero result code.The class contains the command result code and its stdout
     and strerr content.
     """
+
     def __init__(
             self,
             code: int,
@@ -44,11 +45,11 @@ class Command():
         """Run the command and return its stdout.
         """
         process = subprocess.Popen(
-                self.args,
-                shell=self.shell,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                **kwargs)
+            self.args,
+            shell=self.shell,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            **kwargs)
         LOGGER.debug(f"Executing of command '{process.args}' started")
         out, err = process.communicate()
 

@@ -26,11 +26,11 @@ class TestMonitorSpecificNodeAndUnit(unittest.TestCase):
 
     def run_command(self, args, shell=True, **kwargs):
         process = subprocess.Popen(
-                args,
-                shell=shell,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                **kwargs)
+            args,
+            shell=shell,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            **kwargs)
         print(f"Executing of command '{process.args}' started")
         out, err = process.communicate()
 
