@@ -122,6 +122,18 @@ class BluechiMachine():
              with content:\n{content}")
         self.create_file(target_dir, script_file_name, content)
 
+    def copy_machine_lib(self):
+        LOGGER.info(f"Copying machine lib...")
+        curr_dir = os.getcwd()
+        source_dir = os.path.join(curr_dir, "..", "..", "..", "bluechi_test", "bluechi_machine_lib")
+        self.exec_run("mkdir -p /tmp/bluechi_machine_lib")
+        for filename in os.listdir(source_dir):
+            source_path = os.path.join(source_dir, filename)
+            if os.path.isfile(source_path):
+                content = read_file(source_path)
+                target_dir = os.path.join("/", "tmp", "bluechi_machine_lib")
+                self.create_file(target_dir, filename, content)
+
     def restart_with_config_file(self, config_file_location, service):
         unit_dir = "/usr/lib/systemd/system"
         service_file = f"{service}.service"
@@ -250,3 +262,4 @@ class BluechiControllerMachine(BluechiMachine):
 
         # add confd file to container
         self.create_file(self.config.get_confd_dir(), self.config.file_name, self.config.serialize())
+        self.copy_machine_lib()
