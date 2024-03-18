@@ -8,6 +8,7 @@ import time
 import tempfile
 from typing import List, Pattern, Set, Tuple
 
+
 class FileFollower:
     def __init__(self, file_name):
         self.pos = 0
@@ -21,7 +22,7 @@ class FileFollower:
     def __exit__(self, exception_type, exception_value, exception_traceback):
         if (exception_type):
             print(f"Exception raised: excpetion_type='{exception_type}', "
-                f"exception_value='{exception_value}', exception_traceback: {exception_traceback}")
+                  f"exception_value='{exception_value}', exception_traceback: {exception_traceback}")
         if self.file_desc:
             self.file_desc.close()
 
@@ -39,9 +40,10 @@ class FileFollower:
     def new_lines(self):
         self.seek()
         return '\n' in self.file_desc.read()
-    
+
+
 class BluechiCtlBackgroundRunner:
-    def __init__(self, command:List, expected_patterns:Set[Pattern]):
+    def __init__(self, command: List, expected_patterns: Set[Pattern]):
         self.command = command
         self.expected_patterns = copy.copy(expected_patterns)
         self.thread = threading.Thread(target=self.process_events)
@@ -49,7 +51,7 @@ class BluechiCtlBackgroundRunner:
         self.all_found = False
         self.finished = False
         self.bluechictl_proc = None
-    
+
     def process_events(self):
         print("Starting process_events")
         with tempfile.NamedTemporaryFile() as out_file:
@@ -102,24 +104,25 @@ class BluechiCtlBackgroundRunner:
     def found_all_patterns(self):
         return self.all_found
 
+
 class BluechiCtl:
-    def run(self, args:List) -> Tuple[str, str]:
-        command = ["/usr/bin/bluechictl"] + args
+    def run(self, args: List) -> Tuple[str, str]:
+        command = ["bluechictl"] + args
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         print(f"Executing of command '{process.args}' started")
         return process.communicate()
-    
+
     def metrics_listen(self) -> Tuple[str, str]:
         return self.run(["metrics", "listen"])
-    
+
     def metrics_enable(self) -> Tuple[str, str]:
         return self.run(["metrics", "enable"])
-    
+
     def metrics_disable(self) -> Tuple[str, str]:
         return self.run(["metrics", "disable"])
-    
+
     def unit_start(self, node, unit) -> Tuple[str, str]:
         return self.run(["start", node, unit])
-    
+
     def unit_stop(self, node, unit) -> Tuple[str, str]:
         return self.run(["stop", node, unit])

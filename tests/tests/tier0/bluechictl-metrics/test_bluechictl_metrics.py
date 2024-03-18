@@ -13,6 +13,7 @@ LOGGER = logging.getLogger(__name__)
 
 node_foo_name = "node-foo"
 
+
 def exec(ctrl: BluechiControllerMachine, nodes: Dict[str, BluechiAgentMachine]):
     foo = nodes[node_foo_name]
     service = SimpleRemainingService()
@@ -22,11 +23,12 @@ def exec(ctrl: BluechiControllerMachine, nodes: Dict[str, BluechiAgentMachine]):
 
     result, output = ctrl.run_python(os.path.join("python", "bluechictl_metrics_test.py"))
 
+
 def test_bluechictl_metrics(
         bluechi_test: BluechiTest,
         bluechi_ctrl_default_config: BluechiControllerConfig,
         bluechi_node_default_config: BluechiAgentConfig):
-    
+
     node_foo_cfg = bluechi_node_default_config.deep_copy()
     node_foo_cfg.node_name = node_foo_name
 

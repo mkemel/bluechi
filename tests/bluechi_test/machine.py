@@ -125,13 +125,13 @@ class BluechiMachine():
     def copy_machine_lib(self):
         LOGGER.info(f"Copying machine lib...")
         curr_dir = os.getcwd()
-        source_dir = os.path.join(curr_dir, "..", "..", "..", "bluechi_test", "bluechi_machine_lib")
-        self.exec_run("mkdir -p /tmp/bluechi_machine_lib")
+        source_dir = os.path.join(curr_dir, "..", "..", "..", "bluechi_test", "bluechilib")
+        self.exec_run("mkdir -p /tmp/bluechilib")
         for filename in os.listdir(source_dir):
             source_path = os.path.join(source_dir, filename)
             if os.path.isfile(source_path):
                 content = read_file(source_path)
-                target_dir = os.path.join("/", "tmp", "bluechi_machine_lib")
+                target_dir = os.path.join("/", "tmp", "bluechilib")
                 self.create_file(target_dir, filename, content)
 
     def restart_with_config_file(self, config_file_location, service):
