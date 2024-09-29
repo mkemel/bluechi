@@ -207,7 +207,7 @@ static int agent_reset_heartbeat_timer(Agent *agent, sd_event_source **event_sou
                         0,
                         agent_heartbeat_timer_callback,
                         agent,
-                        0,
+                        50,
                         "agent-heartbeat-timer-source",
                         false);
 }
